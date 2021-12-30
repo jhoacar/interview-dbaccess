@@ -43,8 +43,4 @@ Requerimientos generales:
 El código fuente debe ser enviado por correo antes de la reunión.
 
 En la reunión nos mostrarás el sistema ejecutándose y el código fuente.
-
-Apenas puedas, confírmame en qué horario podemos agendar:
-
-Tenemos disponibilidad para el martes y miércoles, sería de aproximadamente 45min-1hora.
 </p>
