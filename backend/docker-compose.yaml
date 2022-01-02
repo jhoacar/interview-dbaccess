@@ -7,7 +7,7 @@ services:
     volumes:
     - /home/jhoacar/JHOAN/DBAccess/Interview/backend/learning-api:/app
     ports:
-      - 3000:3000
+      - 8000:8000
     environment:
       DB_CONNECTION: mongodb
       DB_HOST: mongo
@@ -17,8 +17,8 @@ services:
       DB_PASSWORD: root
     depends_on:
       - mongo
-    #command: 
-    #  php /app/artisan serve --host=0.0.0.0 --port=3000 &
+    command: 
+      nohup php /app/artisan serve --host 0.0.0.0
 
 
   mongo:
