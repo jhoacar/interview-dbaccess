@@ -1,0 +1,39 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Course",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/courses": {
+            "get": {
+                "tags": [
+                    "CourseController"
+                ],
+                "summary": "Mostrar cursos",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar todos los cursos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "CourseController",
+            "description": "API Endpoints of Courses"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
