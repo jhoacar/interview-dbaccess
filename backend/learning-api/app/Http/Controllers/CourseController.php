@@ -4,34 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Instructor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Throwable;
+
 /**
-* @OA\Info(title="API Course", version="1.0")
-*
-* @OA\Server(url="http://localhost:8000")
-*
-* @OA\Tag(
-*     name="CourseController",
-*     description="API Endpoints of Courses"
-* )
-*/
+ * @OA\Info(title="API Course", version="1.0")
+ *
+ * @OA\Server(url="http://localhost:8000")
+ *
+ * @OA\Tag(
+ *     name="CourseController",
+ *     description="API Endpoints of Courses"
+ * )
+ */
 class CourseController extends Controller
 {
     /**
-    * @OA\Get(
-    *     path="/api/courses",
-    *     tags={"CourseController"},
-    *     summary="Mostrar cursos",
-    *     @OA\Response(
-    *         response=200,
-    *         description="Mostrar todos los cursos."
-    *     ),
-    *     @OA\Response(
-    *         response="default",
-    *         description="Ha ocurrido un error."
-    *     )
-    * )
-    */
+     * @OA\Get(
+     *     path="/api/courses",
+     *     tags={"CourseController"},
+     *     summary="Mostrar cursos",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar todos los cursos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
     /**
      * Display a listing of the resource.
      *
@@ -61,8 +64,8 @@ class CourseController extends Controller
      *       @OA\JsonContent(
      *            type="object",
      *            @OA\Property(property="name", type="string",example="Curso de Programacion"),
-     *            @OA\Property(property="duration", type="string",example="1h-30min"),
-     *            @OA\Property(property="start_date", type="date",example="29-12-2019"),
+     *            @OA\Property(property="duration", type="string",example="01:30:00"),
+     *            @OA\Property(property="start_date", type="date",example="2016-01-23 11:53:20"),
      *            @OA\Property(property="instructor_id", type="string",example="61d2082c371e5949897a8fe5"),
      *       )
      *     ),
@@ -84,22 +87,27 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $instructor_id = $request->input("instructor_id");
-        $instructor = Instructor::find($instructor_id);
-        $startDate = $request["start-date"];
-        
-        if(!$instructor)
-            return response()->json(['error' => 'failed searching instructor at DB','instructor_id' =>$instructor_id]);
-        
-        else if(!$instructor["courses"])
+        $instructorId = $request->input("instructor_id");
+        $startDate = $request->input("start_date");
+        $duration = $request->input("duration");
+
+        $instructor = Instructor::find($instructorId);
+        $errorProperties = $this->getErrorProperties($request->all());
+
+        if ($errorProperties)
+            return response()->json(['error' => $errorProperties, 'instructor_id' => $instructorId]);
+
+        else if (!$instructor)
+            return response()->json(['error' => 'failed searching instructor at DB', 'instructor_id' => $instructorId]);
+
+        else if (!$instructor["courses"])
             return $this->createCourse($request->all());
 
-        else if($this->validateDate($startDate,$instructor))
+        else if ($this->validateDate($startDate, $duration, $instructor))
             return $this->createCourse($request->all());
-        
+
         else
-            return response()->json(['error' => 'failed create a course, there are match with dates in other courses for this instructor','instructor_id' =>$instructor_id]);
-        
+            return response()->json(['error' => 'failed create a course, there are match with dates in other courses for this instructor', 'instructor_id' => $instructorId]);
     }
 
     /**
@@ -135,7 +143,7 @@ class CourseController extends Controller
     {
         //
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -155,24 +163,16 @@ class CourseController extends Controller
      * @param  \App\Instructor  $instructor
      * @return boolean
      */
-    public function validateDate( $date ,Instructor $instructor)
+    private function validateDate($date, $duration, Instructor $instructor)
     {
+        
         $courses = $instructor["courses"];
 
-        if(!$date || !$courses)
-            return false;
-
-        $hasRepeatDate = false;
-
-        foreach( $courses as $course ){
-
-            if($hasRepeatDate($date,$course)){
-                $hasRepeatDate=true;
-                break;
-            }
+        foreach ($courses as $course){
+            if ($this->hasRepeat($date, $duration, $course))
+                return false;
         }
-        dd($hasRepeatDate); // this is for access it out of the loop.
-        return $hasRepeatDate;
+        return true;
     }
     /**
      * Compare if course has same date
@@ -180,23 +180,23 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return boolean
      */
-    public function hasRepeat( $date ,Course $course)
+    private function hasRepeat($date, $duration, $course)
     {
-            
-        $foundCourse = Course::find($course["_id"]);
+        $idCourse = $course["_id"];
+        $foundCourse = Course::find($idCourse);
 
-        if(!$foundCourse)
-            return false;
-            
-        $startDate = $foundCourse["start-date"];
-
-        if(!$startDate)
-            return false;
-
-        if($startDate === $date)
+        if (!$foundCourse)
             return true;
 
-        return false;
+        $startDate = $foundCourse["start_date"];
+
+        if (!$startDate)
+            return true;
+
+        if ($this->hasCollisionDate($date, $duration, $startDate))
+            return true;
+
+        return true;
     }
     /**
      * Create a course and update courses of his instructor
@@ -204,16 +204,54 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    private function createCourse($course){
-        
-        $course_created = Course::create($course);
+    private function createCourse($course)
+    {
 
-        $instructor_id = $course["instructor_id"];
+        $courseCreated = Course::create($course);
 
-        Instructor::where('_id', '=', $instructor_id)
-        
-        ->push('courses', array( '_id' => $course_created["_id"]));
-        
-        return $course_created;
+        $instructorId = $course["instructor_id"];
+
+        Instructor::where('_id', '=', $instructorId)
+
+            ->push('courses', array('_id' => $courseCreated["_id"]));
+
+        return $courseCreated;
     }
+    /**
+     * Validate that $initDate and $duration don't have collision with $endDate
+     *
+     * @param  string  $initDate
+     * @param  string  $duration
+     * @param  string  $endDate
+     * @return boolean
+     */
+    private function hasCollisionDate($initDate, $duration, $endDate)
+    {
+        $timeInitDate = strtotime($initDate);
+        $timeEndDate = strtotime($endDate);
+        return $timeInitDate == $timeEndDate;
+    }
+
+    /**
+     * Validate correct pattern of properties
+     * @param object $properties
+     * @return string Error message
+     */
+    private function getErrorProperties($properties){
+        
+        if(!isset($properties["start_date"]))
+            return 'failed to create course, need start_date property';
+        
+        else if(!isset($properties["duration"]))
+            return 'failed to create course, need duration property';
+        
+        else if(!strtotime($properties["start_date"]))
+            return 'failed to create course, bad pattern in start_date property';
+
+        else if(!strtotime($properties["duration"]))
+            return 'failed to create course, bad pattern in duration property';
+
+        return false;
+    }
+
 }

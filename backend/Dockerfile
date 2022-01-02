@@ -1,5 +1,3 @@
-FROM jhoacar/laravel-mongo:v1.0
+FROM jhoacar/laravel-mongo:base
 
-RUN git clone https://github.com/jhoacar/laravel-mongo-base /app
-
-WORKDIR /app
+COPY /home/jhoacar/JHOAN/DBAccess/Interview/backend /app

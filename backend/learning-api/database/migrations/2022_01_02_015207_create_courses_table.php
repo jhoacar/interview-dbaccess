@@ -16,7 +16,7 @@ class CreateCoursesTable extends Migration
         Schema::create('courses', function (Blueprint $collection) {
             $collection->index('name');
             $collection->index('duration');
-            $collection->index('start-date');
+            $collection->index('start_date');
             $collection->index('instructor_id');
         });
     }
