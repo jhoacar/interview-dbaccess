@@ -7,6 +7,12 @@
     "servers": [
         {
             "url": "http://localhost:8000"
+        },
+        {
+            "url": "http://localhost:8000"
+        },
+        {
+            "url": "http://localhost:8000"
         }
     ],
     "paths": {
@@ -24,6 +30,107 @@
                         "description": "Ha ocurrido un error."
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "CourseController"
+                ],
+                "summary": "Subir un curso",
+                "responses": {
+                    "200": {
+                        "description": "Ingresa un curso a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/instructors": {
+            "get": {
+                "tags": [
+                    "InstructorController"
+                ],
+                "summary": "Mostrar instructores",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar todos los instructores."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "InstructorController"
+                ],
+                "summary": "Subir un instructor",
+                "responses": {
+                    "200": {
+                        "description": "Postea un instructor a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/students": {
+            "get": {
+                "tags": [
+                    "StudentController"
+                ],
+                "summary": "Mostrar estudiantes",
+                "responses": {
+                    "200": {
+                        "description": "Muestra todos los estudiantes."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "StudentController"
+                ],
+                "summary": "Subir un estudiante",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jose"
+                                    },
+                                    "courses": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "_id": {
+                                                    "type": "string",
+                                                    "example": "203912830924812094"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subir un estudiante a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
             }
         }
     },
@@ -31,6 +138,14 @@
         {
             "name": "CourseController",
             "description": "API Endpoints of Courses"
+        },
+        {
+            "name": "InstructorController",
+            "description": "API Endpoints of Instructors"
+        },
+        {
+            "name": "StudentController",
+            "description": "API Endpoints of Students"
         }
     ],
     "security": [

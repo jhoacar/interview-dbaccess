@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Instructor;
 use Illuminate\Http\Request;
 /**
-* @OA\Info(title="API Course", version="1.0")
+* 
 *
 * @OA\Server(url="http://localhost:8000")
 *
