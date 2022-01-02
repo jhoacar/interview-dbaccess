@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  learning-api:
+    image: jhoacar/laravel-mongo:v2
+    restart: always
+    volumes:
+    - /home/jhoacar/JHOAN/DBAccess/Interview/backend/learning-api:/app
+    ports:
+      - 3000:3000
+    environment:
+      DB_CONNECTION: mongodb
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_DATABASE: learning
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - mongo
+    #command: 
+    #  php /app/artisan serve --host=0.0.0.0 --port=3000 &
+
+
+  mongo:
+    image: mongo:4.4-focal
+    restart: always
+    ports: 
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: learning
+    volumes:
+      - mongodb:/data/db
+      - /home/jhoacar/JHOAN/DBAccess/Laravel/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+    depends_on:
+      - mongo
+
+
+#Use MOUNT volume because Mongo need permissions in the system
+volumes:
+  mongodb:
+    external: false 
