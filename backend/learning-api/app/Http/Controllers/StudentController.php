@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Student;
 use Illuminate\Http\Request;
 /**
 * @OA\Info(title="API Course", version="1.0")
@@ -10,20 +10,21 @@ use Illuminate\Http\Request;
 * @OA\Server(url="http://localhost:8000")
 *
 * @OA\Tag(
-*     name="CourseController",
-*     description="API Endpoints of Courses"
+*     name="StudentController",
+*     description="API Endpoints of Students"
 * )
 */
-class CourseController extends Controller
+
+class StudentController extends Controller
 {
     /**
     * @OA\Get(
-    *     path="/api/courses",
-    *     tags={"CourseController"},
-    *     summary="Mostrar cursos",
+    *     path="/api/students",
+    *     tags={"StudentController"},
+    *     summary="Mostrar estudiantes",
     *     @OA\Response(
     *         response=200,
-    *         description="Mostrar todos los cursos."
+    *         description="Muestra todos los estudiantes."
     *     ),
     *     @OA\Response(
     *         response="default",
@@ -38,8 +39,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
-        return $courses;
+        $students = Student::all();
+        return $students;
     }
 
     /**
@@ -53,12 +54,12 @@ class CourseController extends Controller
     }
     /**
     * @OA\Post(
-    *     path="/api/courses",
-    *     tags={"CourseController"},
-    *     summary="Subir un curso",
+    *     path="/api/students",
+    *     tags={"StudentController"},
+    *     summary="Subir un estudiante",
     *     @OA\Response(
     *         response=200,
-    *         description="Ingresa un curso a la base de datos."
+    *         description="Subir un estudiante a la base de datos."
     *     ),
     *     @OA\Response(
     *         response="default",
@@ -75,17 +76,17 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::create($request->all());
-        return response()->json(array_merge(['status' => 'created'],$course));
+        $student = Student::create($request->all());
+        return response()->json(array_merge(['status' => 'created'],$student));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Student $student)
     {
         //
     }
@@ -93,10 +94,10 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(Student $student)
     {
         //
     }
@@ -105,10 +106,10 @@ class CourseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Student $student)
     {
         //
     }
@@ -116,10 +117,10 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Student $student)
     {
         //
     }

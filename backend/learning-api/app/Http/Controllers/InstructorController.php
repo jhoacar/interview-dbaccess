@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Instructor;
 use Illuminate\Http\Request;
 /**
 * @OA\Info(title="API Course", version="1.0")
@@ -10,20 +10,20 @@ use Illuminate\Http\Request;
 * @OA\Server(url="http://localhost:8000")
 *
 * @OA\Tag(
-*     name="CourseController",
-*     description="API Endpoints of Courses"
+*     name="InstructorController",
+*     description="API Endpoints of Instructors"
 * )
 */
-class CourseController extends Controller
+class InstructorController extends Controller
 {
     /**
     * @OA\Get(
-    *     path="/api/courses",
-    *     tags={"CourseController"},
-    *     summary="Mostrar cursos",
+    *     path="/api/instructors",
+    *     tags={"InstructorController"},
+    *     summary="Mostrar instructores",
     *     @OA\Response(
     *         response=200,
-    *         description="Mostrar todos los cursos."
+    *         description="Mostrar todos los instructores."
     *     ),
     *     @OA\Response(
     *         response="default",
@@ -38,8 +38,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
-        return $courses;
+        $instructors = Instructor::all();
+        return $instructors;
     }
 
     /**
@@ -53,12 +53,12 @@ class CourseController extends Controller
     }
     /**
     * @OA\Post(
-    *     path="/api/courses",
-    *     tags={"CourseController"},
-    *     summary="Subir un curso",
+    *     path="/api/instructors",
+    *     tags={"InstructorController"},
+    *     summary="Subir un instructor",
     *     @OA\Response(
     *         response=200,
-    *         description="Ingresa un curso a la base de datos."
+    *         description="Postea un instructor a la base de datos."
     *     ),
     *     @OA\Response(
     *         response="default",
@@ -66,7 +66,6 @@ class CourseController extends Controller
     *     )
     * )
     */
-
     /**
      * Store a newly created resource in storage.
      *
@@ -75,17 +74,17 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::create($request->all());
-        return response()->json(array_merge(['status' => 'created'],$course));
+        $instructor = Instructor::create($request->all());
+        return response()->json(array_merge(['status' => 'created'],$instructor));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Instructor $instructor)
     {
         //
     }
@@ -93,10 +92,10 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(Instructor $instructor)
     {
         //
     }
@@ -105,10 +104,10 @@ class CourseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  \App\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Instructor $instructor)
     {
         //
     }
@@ -116,10 +115,10 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Instructor $instructor)
     {
         //
     }

@@ -1,10 +1,12 @@
 ARG PHP_VERSION=7.4
 ARG COMPOSER_VERSION=2.0
-ARG LARAVEL_VERSION=7.*
-ARG JENSSEGERS_MONGO_VERSION=*
 
 FROM composer:${COMPOSER_VERSION}
 FROM php:${PHP_VERSION}-cli
+
+ENV LARAVEL_VERSION=7.*
+ENV JENSSEGERS_MONGO_VERSION=*
+
 
 RUN apt-get update && \
     apt-get install -y autoconf pkg-config libssl-dev git libzip-dev zlib1g-dev && \
@@ -16,11 +18,11 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN rm -rf /app
 
-RUN composer create-project laravel/laravel /app --prefer-dist "${LARAVEL_VERSION}"
+RUN composer create-project laravel/laravel /app --prefer-dist "$LARAVEL_VERSION"
 
-RUN composer require -d /app jenssegers/mongodb:${JENSSEGERS_MONGO_VERSION}
+RUN composer require -d /app jenssegers/mongodb:$JENSSEGERS_MONGO_VERSION
 
-RUN CONFIG_MONGO_DRIVER=$(echo "\n\n \
+ENV CONFIG_MONGO_DRIVER="\n\n \
         'mongodb' => \[   \
             'driver' => 'mongodb',  \
             'host' => env('DB_HOST', 'localhost'),  \
@@ -31,7 +33,7 @@ RUN CONFIG_MONGO_DRIVER=$(echo "\n\n \
             'options' => \[  \
                 'database' => 'admin' \
             \]  \
-        \],  \n\n " )
+        \],  \n\n "
 
 # Add driver to configuration database
 RUN sed -i "s/'connections' => \[/& $CONFIG_MONGO_DRIVER/" /app/config/database.php

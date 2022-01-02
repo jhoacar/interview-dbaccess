@@ -2,7 +2,7 @@ version: '3'
 services:
 
   learning-api:
-    image: jhoacar/laravel-mongo:v2
+    image: jhoacar/laravel-mongo:base
     restart: always
     volumes:
     - /home/jhoacar/JHOAN/DBAccess/Interview/backend/learning-api:/app

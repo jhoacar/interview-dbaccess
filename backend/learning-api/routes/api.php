@@ -19,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::apiResource("courses","CourseController");
+
+Route::apiResource("instructors","InstructorController");
+
+Route::apiResource("students","StudentController");
