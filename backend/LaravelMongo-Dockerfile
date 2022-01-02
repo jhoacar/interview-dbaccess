@@ -1,0 +1,43 @@
+ARG PHP_VERSION=7.4
+ARG COMPOSER_VERSION=2.0
+ARG LARAVEL_VERSION=7.*
+ARG JENSSEGERS_MONGO_VERSION=*
+
+FROM composer:${COMPOSER_VERSION}
+FROM php:${PHP_VERSION}-cli
+
+RUN apt-get update && \
+    apt-get install -y autoconf pkg-config libssl-dev git libzip-dev zlib1g-dev && \
+    pecl install mongodb && docker-php-ext-enable mongodb && \
+    pecl install xdebug && docker-php-ext-enable xdebug && \
+    docker-php-ext-install -j$(nproc) pdo_mysql zip
+
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
+RUN rm -rf /app
+
+RUN composer create-project laravel/laravel /app --prefer-dist "${LARAVEL_VERSION}"
+
+RUN composer require -d /app jenssegers/mongodb:${JENSSEGERS_MONGO_VERSION}
+
+RUN CONFIG_MONGO_DRIVER=$(echo "\n\n \
+        'mongodb' => \[   \
+            'driver' => 'mongodb',  \
+            'host' => env('DB_HOST', 'localhost'),  \
+            'port' => env('DB_PORT', 27017),  \
+            'database' => env('DB_DATABASE'),  \
+            'username' => env('DB_USERNAME'),  \
+            'password' => env('DB_PASSWORD'),  \
+            'options' => \[  \
+                'database' => 'admin' \
+            \]  \
+        \],  \n\n " )
+
+# Add driver to configuration database
+RUN sed -i "s/'connections' => \[/& $CONFIG_MONGO_DRIVER/" /app/config/database.php
+
+CMD php /app/artisan serve --host=0.0.0.0 --port=8008
+
+EXPOSE 8008
+
+WORKDIR /app

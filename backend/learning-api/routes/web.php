@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    $message = 'Welcome to Home Page, you need to go http://' .$request->getHost() . ':' .  $request->getPort(). '/api';
+    return response()->json(['greetings' => $message ],200);
+    //return view('welcome');
+});
+
+Route::get('/api', function (Request $request) {
+    $message = 'Welcome to Learning API, you can see documentation at http://' . $request->getHost() . ':' .  $request->getPort(). '/api/documentation';
+    return response()->json(['greetings' => $message ],200);
+    //return view('welcome');
 });
