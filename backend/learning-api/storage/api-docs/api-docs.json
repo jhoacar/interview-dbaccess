@@ -36,9 +36,36 @@
                     "CourseController"
                 ],
                 "summary": "Subir un curso",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Curso de Programacion"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "1h-30min"
+                                    },
+                                    "start_date": {
+                                        "type": "date",
+                                        "example": "29-12-2019"
+                                    },
+                                    "instructor_id": {
+                                        "type": "string",
+                                        "example": "61d2082c371e5949897a8fe5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Ingresa un curso a la base de datos."
+                        "description": "Subir un curso a la base de datos."
                     },
                     "default": {
                         "description": "Ha ocurrido un error."
@@ -66,9 +93,24 @@
                     "InstructorController"
                 ],
                 "summary": "Subir un instructor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jose"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Postea un instructor a la base de datos."
+                        "description": "Subir un instructor a la base de datos."
                     },
                     "default": {
                         "description": "Ha ocurrido un error."
@@ -104,18 +146,6 @@
                                     "name": {
                                         "type": "string",
                                         "example": "Jose"
-                                    },
-                                    "courses": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "_id": {
-                                                    "type": "string",
-                                                    "example": "203912830924812094"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
                                     }
                                 },
                                 "type": "object"

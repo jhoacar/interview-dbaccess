@@ -51,21 +51,27 @@ class InstructorController extends Controller
     {
         //
     }
-    /**
-    * @OA\Post(
-    *     path="/api/instructors",
-    *     tags={"InstructorController"},
-    *     summary="Subir un instructor",
-    *     @OA\Response(
-    *         response=200,
-    *         description="Postea un instructor a la base de datos."
-    *     ),
-    *     @OA\Response(
-    *         response="default",
-    *         description="Ha ocurrido un error."
-    *     )
-    * )
-    */
+        /**
+     * @OA\Post(
+     *     path="/api/instructors",
+     *     tags={"InstructorController"},
+     *     summary="Subir un instructor",
+     *     @OA\RequestBody(
+     *       @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="name", type="string",example="Jose")
+     *       )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Subir un instructor a la base de datos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
     /**
      * Store a newly created resource in storage.
      *
@@ -75,7 +81,7 @@ class InstructorController extends Controller
     public function store(Request $request)
     {
         $instructor = Instructor::create($request->all());
-        return response()->json(array_merge(['status' => 'created'],$instructor));
+        return $instructor;
     }
 
     /**

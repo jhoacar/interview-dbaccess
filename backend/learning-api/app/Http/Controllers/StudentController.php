@@ -61,16 +61,7 @@ class StudentController extends Controller
      *     @OA\RequestBody(
      *       @OA\JsonContent(
      *            type="object",
-     *            @OA\Property(property="name", type="string",example="Jose"),
-     *            @OA\Property(property="courses", type="array",
-     *               @OA\Items(
-     *                  @OA\Property(
-     *                         property="_id",
-     *                         type="string",
-     *                         example="203912830924812094"
-     *                  )
-     *               )
-     *            )
+     *            @OA\Property(property="name", type="string",example="Jose")
      *       )
      *     ),
      *     @OA\Response(
@@ -83,7 +74,6 @@ class StudentController extends Controller
      *     )
      * )
      */
-
     /**
      * Store a newly created resource in storage.
      *
@@ -93,7 +83,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $student = Student::create($request->all());
-        return response()->json(array_merge(['status' => 'created'], $student));
+        return $student;
     }
 
     /**
