@@ -12,7 +12,7 @@ use Throwable;
 /**
  * @OA\Info(title="API Course", version="1.0")
  *
- * @OA\Server(url="http://localhost:8000")
+ * @OA\Server(url="https://api.learning.jhoacar.me")
  *
  * @OA\Tag(
  *     name="CourseController",
