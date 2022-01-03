@@ -38,9 +38,3 @@ Requerimientos generales:
     <li>Utilizar GraphQL.</li>
     <li>Desplegar en Vercel, Heroku o similar.</li>
 </ul>
-
-<p>
-El código fuente debe ser enviado por correo antes de la reunión.
-
-En la reunión nos mostrarás el sistema ejecutándose y el código fuente.
-</p>
