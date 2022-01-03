@@ -2,10 +2,8 @@ version: '3'
 services:
 
   learning-api:
-    image: jhoacar/laravel-mongo:base
+    image: jhoacar/learning-api:v1
     restart: always
-    volumes:
-    - /home/jhoacar/JHOAN/DBAccess/Interview/backend/learning-api:/app
     ports:
       - 8000:8008
     environment:

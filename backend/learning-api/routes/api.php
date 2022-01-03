@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::apiResource("/courses","CourseController");
+Route::apiResource("/courses","CourseController");
 Route::apiResource("/students","StudentController");
-// Route::apiResource("/instructors","InstructorController");
+Route::apiResource("/instructors","InstructorController");
 
 // Route::get("/courses","CourseController@index");
 // Route::post("/courses","CourseController@store");
