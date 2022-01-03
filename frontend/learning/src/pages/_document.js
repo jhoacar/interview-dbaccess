@@ -10,6 +10,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <title>Learning - Interview DBAccess</title>
           <link rel="shortcut icon" href="/icon.png" />
         </Head>
         <body>

@@ -1,39 +1,24 @@
 import React from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Container from "react-bootstrap/Container";
 import Link from "next/link";
-const Navbar = () => {
+
+const CustomNav = () => {
   return (
-    <nav className="w-100">
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <Link href="/">
-            <a className="nav-link active" aria-current="page">
-              Inicio
-            </a>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link href="/cursos">
-            <a className="nav-link" aria-current="page">
-              Cursos
-            </a>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link href="/instructores">
-            <a className="nav-link" aria-current="page">
-              Instructores
-            </a>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link href="/estudiantes">
-            <a className="nav-link" aria-current="page">
-              Estudiantes
-            </a>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Learning Cursos</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Inicio</Nav.Link>
+            
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
-export default Navbar;
+export default CustomNav;
