@@ -2,10 +2,12 @@ version: '3'
 services:
 
   learning-api:
-    image: jhoacar/learning-api:v1
+    image: jhoacar/learning-api:v2
     restart: always
     ports:
       - 8000:8008
+    volumes:
+      - /home/jhoacar/JHOAN/DBAccess/Interview/backend/learning-api:/app
     environment:
       DB_CONNECTION: mongodb
       DB_HOST: mongo
