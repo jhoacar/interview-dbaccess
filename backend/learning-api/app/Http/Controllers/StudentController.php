@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
  * 
@@ -59,6 +61,7 @@ class StudentController extends Controller
      *     tags={"StudentController"},
      *     summary="Subir un estudiante",
      *     @OA\RequestBody(
+     *       required=true,
      *       @OA\JsonContent(
      *            type="object",
      *            @OA\Property(property="name", type="string",example="Jose")
@@ -109,25 +112,100 @@ class StudentController extends Controller
     }
 
     /**
+     * @OA\Put(
+     *     path="/api/students/{id}",
+     *     tags={"StudentController"},
+     *     summary="Actualizar un estudiante",
+     *     @OA\Parameter(
+     *         description="Id del estudiante a actualizar",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         example="24214432423v123",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="name", type="string",example="Pedro"),
+     *       )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Actualizar un curso a la base de datos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        
+        $student = Student::findOrFail($id);
+        //$student = $request->all();
+        //$student->save();
+        return $student;
+        // $student->update($request->all()); 
+        // foreach($request as $parameter){
+        //     $student->
+        // }
+        //$student->save();
+        //$student = Student::where('_id',$request->id)
+        //->update($request->all()); 
+
+        // return DB::collection('users')
+        //         ->where('_id', $request->id)
+        //         ->update($request->all(), ['upsert' => true]);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/students/{id}",
+     *     tags={"StudentController"},
+     *     summary="Borrar un estudiante",
+     *     @OA\Parameter(
+     *         description="Id del estudiante a eliminar",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         example="124124124msas1231m",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Eliminar un estudiante a la base de datos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        if(Student::destroy($id))
+            return response()->json(["ok" => "student deleted"]);
+        else
+            return response()->json(["error" => "student could don't be deleted"]);
     }
 }

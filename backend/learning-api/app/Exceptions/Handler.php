@@ -56,6 +56,8 @@ class Handler extends ExceptionHandler
             $message = 'not found: ' . $request->path();
             return response()->json(['error' => $message ],404);
         }
-        return response()->json(['error' => 'server error'],500);
+        //return parent::render($request, $exception);
+        $exception->error="server error";
+        return response()->json($exception,500);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Instructor;
 use Carbon\Carbon;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -61,6 +62,7 @@ class CourseController extends Controller
      *     tags={"CourseController"},
      *     summary="Subir un curso",
      *     @OA\RequestBody(
+     *       required=true,
      *       @OA\JsonContent(
      *            type="object",
      *            @OA\Property(property="name", type="string",example="Curso de Programacion"),
@@ -87,27 +89,45 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $instructorId = $request->input("instructor_id");
-        $startDate = $request->input("start_date");
-        $duration = $request->input("duration");
+        $validation = $this->verifyCourse($request->all());
 
-        $instructor = Instructor::find($instructorId);
-        $errorProperties = $this->getErrorProperties($request->all());
-
-        if ($errorProperties)
-            return response()->json(['error' => $errorProperties, 'instructor_id' => $instructorId]);
-
-        else if (!$instructor)
-            return response()->json(['error' => 'failed searching instructor at DB', 'instructor_id' => $instructorId]);
-
-        else if (!$instructor["courses"])
-            return $this->createCourse($request->all());
-
-        else if ($this->validateDate($startDate, $duration, $instructor))
-            return $this->createCourse($request->all());
+        if (!isset($validation["error"]))
+            return response()->json($this->createCourse($request->all()));
 
         else
-            return response()->json(['error' => 'failed create a course, there are match with dates in other courses for this instructor', 'instructor_id' => $instructorId]);
+            return response()->json($validation);
+    }
+
+    /**
+     * Verify correct information about course
+     *
+     * @param  Object  $course
+     * @return Array values for validation
+     */
+    private function verifyCourse($course)
+    {
+
+        $instructorId = $course["instructor_id"];
+        $startDate = $course["start_date"];
+        $duration = $course["duration"];
+
+        $instructor = Instructor::find($instructorId);
+        $errorProperties = $this->getErrorProperties($course);
+
+        if ($errorProperties)
+            return ['error' => $errorProperties, 'instructor_id' => $instructorId];
+
+        else if (!$instructor)
+            return ['error' => 'failed searching instructor at DB', 'instructor_id' => $instructorId];
+
+        else if (!$instructor["courses"])
+            return ['ok' => 'ok'];
+
+        else if ($this->validateDate($startDate, $duration, $instructor))
+            return ['ok' => 'ok'];
+
+        else
+            return ['error' => 'failed create a course, there are match with dates in other courses for this instructor', 'instructor_id' => $instructorId];
     }
 
     /**
@@ -133,27 +153,97 @@ class CourseController extends Controller
     }
 
     /**
+     * @OA\Put(
+     *     path="/api/courses/{id}",
+     *     tags={"CourseController"},
+     *     summary="Actualizar un curso",
+     *     @OA\Parameter(
+     *         description="Id del curso a actualizar",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         example="124124124msas1231m",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="name", type="string",example="Curso de Programacion"),
+     *            @OA\Property(property="duration", type="string",example="01:30:00"),
+     *            @OA\Property(property="start_date", type="date",example="2016-01-23 11:53:20"),
+     *            @OA\Property(property="instructor_id", type="string",example="61d2082c371e5949897a8fe5"),
+     *       )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Actualizar un curso a la base de datos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request)
     {
-        //
+        $course = Course::findOrFail($request["id"]);
+
+        $validation = $this->verifyCourse($course);
+
+        if (!isset($validation["error"]))
+            return response()->json($this->updateCourse($course, $request));
+        else
+            return response()->json($validation);
     }
 
-
+    /**
+     * @OA\Delete(
+     *     path="/api/courses/{id}",
+     *     tags={"CourseController"},
+     *     summary="Borrar un curso",
+     *     @OA\Parameter(
+     *         description="Id del curso a eliminar",
+     *         in="path",
+     *         name="id",
+     *         example="124124124msas1231m",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Eliminar un curso a la base de datos."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request,Course $course)
     {
-        //
+        if(Course::destroy($request->id))
+            return response()->json(["ok" => "course deleted"]);
+        else
+            return response()->json(["error" => "course could don't be deleted"]);
     }
 
 
@@ -165,10 +255,10 @@ class CourseController extends Controller
      */
     private function validateDate($date, $duration, Instructor $instructor)
     {
-        
+
         $courses = $instructor["courses"];
 
-        foreach ($courses as $course){
+        foreach ($courses as $course) {
             if ($this->hasRepeat($date, $duration, $course))
                 return false;
         }
@@ -196,7 +286,7 @@ class CourseController extends Controller
         if ($this->hasCollisionDate($date, $duration, $startDate))
             return true;
 
-        return true;
+        return false;
     }
     /**
      * Create a course and update courses of his instructor
@@ -218,6 +308,28 @@ class CourseController extends Controller
         return $courseCreated;
     }
     /**
+     * Update a course and update courses of his instructor
+     *
+     * @param  \App\Course  $course
+     * @return \Illuminate\Http\Response
+     */
+    private function updateCourse(Course $course, Request $request)
+    {
+
+        //$instructorId = $course["instructor_id"];
+
+        $course["name"] = $request["name"];
+        $course["duration"] = $request["duration"];
+        $course["start_date"] = $request["start_date"];
+        $course["instructor_id"] = $request["instructor_id"];
+
+        $course->save();
+
+        //$affeted = Instructor::where('_id', '=', $instructorId);
+
+        return $course;
+    }
+    /**
      * Validate that $initDate and $duration don't have collision with $endDate
      *
      * @param  string  $initDate
@@ -229,7 +341,7 @@ class CourseController extends Controller
     {
         $timeInitDate = strtotime($initDate);
         $timeEndDate = strtotime($endDate);
-        return $timeInitDate == $timeEndDate;
+        return $timeInitDate === $timeEndDate;
     }
 
     /**
@@ -237,21 +349,21 @@ class CourseController extends Controller
      * @param object $properties
      * @return string Error message
      */
-    private function getErrorProperties($properties){
-        
-        if(!isset($properties["start_date"]))
+    private function getErrorProperties($properties)
+    {
+
+        if (!isset($properties["start_date"]))
             return 'failed to create course, need start_date property';
-        
-        else if(!isset($properties["duration"]))
+
+        else if (!isset($properties["duration"]))
             return 'failed to create course, need duration property';
-        
-        else if(!strtotime($properties["start_date"]))
+
+        else if (!strtotime($properties["start_date"]))
             return 'failed to create course, bad pattern in start_date property';
 
-        else if(!strtotime($properties["duration"]))
+        else if (!strtotime($properties["duration"]))
             return 'failed to create course, bad pattern in duration property';
 
         return false;
     }
-
 }

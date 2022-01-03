@@ -18,8 +18,25 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource("courses","CourseController");
+// Route::apiResource("/courses","CourseController");
+Route::apiResource("/students","StudentController");
+// Route::apiResource("/instructors","InstructorController");
 
-Route::apiResource("instructors","InstructorController");
+// Route::get("/courses","CourseController@index");
+// Route::post("/courses","CourseController@store");
+// Route::put("/courses/{id}","CourseController@update");
+// Route::delete("/courses/{id}","CourseController@destroy");
 
-Route::apiResource("students","StudentController");
+
+// Route::get("/students","StudentController@index");
+// Route::post("/students","StudentController@store");
+// Route::match(["PUT","PATCH"],"/students/{id}","StudentController@update");
+// Route::delete("/students/{id}","StudentController@destroy");
+
+// Route::get("/instructors","InstructorController@index");
+// Route::post("/instructors","InstructorController@store");
+// Route::put("/instructors/{id}","InstructorController@update");
+// Route::delete("/instructors/{id}","InstructorController@destroy");
+
+
+

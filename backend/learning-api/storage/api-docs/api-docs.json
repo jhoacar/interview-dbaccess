@@ -37,6 +37,7 @@
                 ],
                 "summary": "Subir un curso",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -47,11 +48,11 @@
                                     },
                                     "duration": {
                                         "type": "string",
-                                        "example": "1h-30min"
+                                        "example": "01:30:00"
                                     },
                                     "start_date": {
                                         "type": "date",
-                                        "example": "29-12-2019"
+                                        "example": "2016-01-23 11:53:20"
                                     },
                                     "instructor_id": {
                                         "type": "string",
@@ -66,6 +67,88 @@
                 "responses": {
                     "200": {
                         "description": "Subir un curso a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/courses/{id}": {
+            "put": {
+                "tags": [
+                    "CourseController"
+                ],
+                "summary": "Actualizar un curso",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del curso a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "124124124msas1231m"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Curso de Programacion"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "01:30:00"
+                                    },
+                                    "start_date": {
+                                        "type": "date",
+                                        "example": "2016-01-23 11:53:20"
+                                    },
+                                    "instructor_id": {
+                                        "type": "string",
+                                        "example": "61d2082c371e5949897a8fe5"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizar un curso a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CourseController"
+                ],
+                "summary": "Borrar un curso",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del curso a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "124124124msas1231m"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminar un curso a la base de datos."
                     },
                     "default": {
                         "description": "Ha ocurrido un error."
@@ -118,6 +201,78 @@
                 }
             }
         },
+        "/api/instructor/{id}": {
+            "put": {
+                "tags": [
+                    "InstructorController"
+                ],
+                "summary": "Actualizar un instructor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del instructor a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "24214432423v123"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pedro"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizar un instructor a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/instructors/{id}": {
+            "delete": {
+                "tags": [
+                    "InstructorController"
+                ],
+                "summary": "Borrar un instructor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del instructor a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "124124124msas1231m"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminar un instructor a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
         "/api/students": {
             "get": {
                 "tags": [
@@ -139,6 +294,7 @@
                 ],
                 "summary": "Subir un estudiante",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -156,6 +312,76 @@
                 "responses": {
                     "200": {
                         "description": "Subir un estudiante a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/students/{id}": {
+            "put": {
+                "tags": [
+                    "StudentController"
+                ],
+                "summary": "Actualizar un estudiante",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del estudiante a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "24214432423v123"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pedro"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizar un curso a la base de datos."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "StudentController"
+                ],
+                "summary": "Borrar un estudiante",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del estudiante a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "124124124msas1231m"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminar un estudiante a la base de datos."
                     },
                     "default": {
                         "description": "Ha ocurrido un error."
