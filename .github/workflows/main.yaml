@@ -24,7 +24,7 @@ jobs:
         name: Build and push the latest version for backend
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./backend
           file: ./backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/learning-api:${{ github.sha }},${{ secrets.DOCKER_HUB_USERNAME }}/learning-api:latest
@@ -32,7 +32,7 @@ jobs:
         name: Build and push the latest version for frontend
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./frontend
           file: ./frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/learning:${{ github.sha }},${{ secrets.DOCKER_HUB_USERNAME }}/learning:latest
