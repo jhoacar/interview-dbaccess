@@ -4,7 +4,7 @@ USER node
 
 WORKDIR /home/node/app
 
-COPY ./learning/package*.json .
+COPY ./learning/package.json .
 
 RUN npm install
 
