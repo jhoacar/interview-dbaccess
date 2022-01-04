@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource("/courses","CourseController");
-Route::apiResource("/students","StudentController");
-Route::apiResource("/instructors","InstructorController");
+Route::middleware('cors:api')->apiResource("/courses","CourseController");
+Route::middleware('cors:api')->apiResource("/students","StudentController");
+Route::middleware('cors:api')->apiResource("/instructors","InstructorController");
 
 // Route::get("/courses","CourseController@index");
 // Route::post("/courses","CourseController@store");

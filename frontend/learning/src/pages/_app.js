@@ -12,7 +12,7 @@ function LearningApp({ Component, pageProps, reduxStore }) {
   return (
     <>
       <Navbar height="150px"/>
-      <Container style={{top:"150px"}} className="position-absolute start-0 end-0">
+      <Container style={{top:"150px"}} className="position-absolute start-0 end-0 d-flex justify-content-center align-items-center p-5">
         <Component {...pageProps} />
       </Container>
     </>
