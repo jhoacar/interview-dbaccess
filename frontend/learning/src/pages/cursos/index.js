@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 const updateCourses = async setCourses =>{
-    const response = await fetch("http://api.learning.jhoacar.me");
-        
+    const response = await fetch("http://api.learning.jhoacar.me/api/courses");
+    console.log(response);
 }
 
 
