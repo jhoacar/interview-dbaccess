@@ -18,7 +18,7 @@ const CustomNav = ({height="150px"}) => {
         <Navbar.Brand as={Link} href="/"><a className="navbar-brand d-flex align-items-center justify-content-center gap-3"><Image src="/icon.png" width="100px" height="100px" />Learning Cursos</a></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="p-5 d-flex gap-3 align-items-center justify-content-evenly w-100">
+          <Nav className="gap-3 w-100">
             <Nav.Link as={Link}  href="/"><a className="nav-link text-center" data-rr-ui-event-key="/">Inicio</a></Nav.Link>
             <Nav.Link as={Link}  href="/cursos"><a className="nav-link text-center" data-rr-ui-event-key="/">Cursos</a></Nav.Link>
             <Nav.Link as={Link}  href="/instructores"><a className="nav-link text-center" data-rr-ui-event-key="/">Instructores</a></Nav.Link>

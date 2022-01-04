@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
 
 import Navbar from "../components/NavBar";
+import Container from "react-bootstrap/Container";
 
 function LearningApp({ Component, pageProps, reduxStore }) {
   useEffect(() => {
@@ -10,8 +11,10 @@ function LearningApp({ Component, pageProps, reduxStore }) {
 
   return (
     <>
-      <Navbar />
-      <Component {...pageProps} />
+      <Navbar height="150px"/>
+      <Container style={{top:"150px"}} className="position-absolute start-0 end-0">
+        <Component {...pageProps} />
+      </Container>
     </>
   );
 }
