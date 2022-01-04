@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  
+  learning:
+    image: jhoacar/learning
+    restart: always
+    expose:
+      - 3000
+    environment:
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_HOST=www.learning.jhoacar.me
+      - LETSENCRYPT_HOST=www.learning.jhoacar.me
+    depends_on:
+      - nginx-proxy
+      - nginx-proxy-acme
+
+  learning-api:
+    image: jhoacar/learning-api
+    restart: always
+    expose:
+      - 8008
+    command: >
+      bash -c 'php /app/artisan config:cache && php /app/artisan key:generate && php /app/artisan migrate && php /app/artisan serve --host 0.0.0.0 --port 8008'
+    environment:
+      - VIRTUAL_PORT=8008
+      - VIRTUAL_HOST=api.learning.jhoacar.me
+      - LETSENCRYPT_HOST=api.learning.jhoacar.me
+      - HTTPS_METHOD=noredirect
+      - DB_CONNECTION=mongodb
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_DATABASE=learning
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    depends_on:
+      - mongo
+      - learning
+
+  mongo:
+    image: mongo:4.4-focal
+    restart: always
+    expose: 
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: learning
+    volumes:
+      - mongodb:/data/db
+      - /home/jhoan/backend/mongo.conf.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    expose:
+      - 8081
+    environment:      
+      VIRTUAL_PORT: 8081
+      VIRTUAL_HOST: mongo.learning.jhoacar.me
+      LETSENCRYPT_HOST: mongo.learning.jhoacar.me
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+    depends_on:
+      - mongo
+      - learning
+
+#Use MOUNT volume because Mongo need permissions in the system
+volumes:
+  mongodb:
+    external: false 

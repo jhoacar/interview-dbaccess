@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./backend/mongo.conf.d,docker-compose.yaml"
+          source: "./backend/mongo.conf.d,docker-compose-nginx-proxy.yaml,docker-compose-learning.yaml,docker-compose-portfolio.yaml"
           target: "~"
       - 
         name: Executing " docker-compose up -d " in server!
@@ -70,4 +70,4 @@ jobs:
               docker kill $CONTAINER_RUNNING_ID
               docker rm $CONTAINER_RUNNING_ID
               docker rmi $IMAGES_ID
-              docker-compose up -d
+              docker-compose -f docker-compose-nginx-proxy.yaml -f docker-compose-portfolio.yaml -f docker-compose-learning.yaml up -d

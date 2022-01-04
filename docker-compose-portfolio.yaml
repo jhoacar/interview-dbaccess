@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  portfolio:
+    image: jhoacar/portfolio:60ecf5e151bf5d17aeab26146f917e5f16686751
+    restart: always
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_PORT=80
+      - VIRTUAL_HOST=prueba.jhoacar.me
+      - LETSENCRYPT_HOST=prueba.jhoacar.me
+    depends_on:
+      - nginx-proxy
+      - nginx-proxy-acme

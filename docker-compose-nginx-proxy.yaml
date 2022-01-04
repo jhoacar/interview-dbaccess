@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy #nginxproxy/nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - HTTPS_METHOD=noredirect
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /home/jhoan/nginxproxy/certs:/etc/nginx/certs
+      - /home/jhoan/nginxproxy/vhost.d:/etc/nginx/vhost.d
+      - /home/jhoan/nginxproxy/html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  nginx-proxy-acme:
+    image: jrcs/letsencrypt-nginx-proxy-companion #nginxproxy/acme-companion
+    restart: always
+    environment:
+      - DEFAULT_EMAIL=carrerojhoan@gmail.com
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - LETSENCRYPT_TEST=true
+      - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/jhoan/nginxproxy/certs:/etc/nginx/certs
+      - /home/jhoan/nginxproxy/vhost.d:/etc/nginx/vhost.d
+      - /home/jhoan/nginxproxy/html:/usr/share/nginx/html
+      - /home/jhoan/nginxproxy/acme:/etc/acme.sh
