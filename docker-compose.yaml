@@ -48,8 +48,8 @@ services:
       - 3000
     environment:
       - VIRTUAL_PORT=3000
-      - VIRTUAL_HOST=www.learning.jhoacar.me
-      - LETSENCRYPT_HOST=www.learning.jhoacar.me
+      - VIRTUAL_HOST=www.learning.jhoacar.me,learning.jhoacar.me
+      - LETSENCRYPT_HOST=www.learning.jhoacar.me,learning.jhoacar.me
     depends_on:
       - nginx-proxy
       - nginx-proxy-acme
