@@ -4,7 +4,11 @@ USER node
 
 WORKDIR /home/node/app
 
-COPY ./learning /home/node/app
+COPY ./learning/package*.json .
+
+RUN npm install
+
+COPY ./learning .
 
 EXPOSE 3000
 
