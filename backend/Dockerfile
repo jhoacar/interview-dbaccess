@@ -1,5 +1,7 @@
 FROM jhoacar/laravel-mongo:base
 
+RUN cat ./learning-api/composer.json
+
 COPY ./learning-api/composer.json .
 
 COPY ./learning-api/.env.example ./.env
@@ -14,4 +16,4 @@ RUN php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 
 COPY ./learning-api .
 
-RUN php artisan l5-swagger:generate
+#RUN php artisan l5-swagger:generate
