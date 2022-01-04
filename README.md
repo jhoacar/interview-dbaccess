@@ -1,6 +1,26 @@
 <h1> Projecto para entrevista de trabajo en DBAccess</h1>
 
-<h2> Requerimientos: </h2>
+<h2>
+    Alojamientos:
+    <ul>
+        <li>
+            Frontend: <a href="https://www.learning.jhoacar.me">https://www.learning.jhoacar.me</a>
+        </li>
+        <li>
+            Backend: <a href="https://api.learning.jhoacar.me">https://api.learning.jhoacar.me</a>
+            <ul>
+                <li>
+                    Documentacion: <a href="http://api.learning.jhoacar.me/api/documentation">http://api.learning.jhoacar.me/api/documentation</a>
+                </li>
+                <li>
+                    Administracion (MongoDB): <a href="https://mongo.learning.jhoacar.me/api/documentation">https://mongo.learning.jhoacar.me/api/documentation</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</h2>
+
+<h2> Consigna: </h2>
 
  <h3>Se necesita una aplicación de gestión para manejar una plataforma de enseñanza online. A través de esta aplicación se debe poder: </h3>
 
