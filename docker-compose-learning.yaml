@@ -21,7 +21,7 @@ services:
     expose:
       - 8008
     command: >
-      bash -c 'php /app/artisan config:cache && php /app/artisan key:generate && php /app/artisan migrate && php /app/artisan serve --host 0.0.0.0 --port 8008'
+      sh -c 'php /app/artisan config:cache && php /app/artisan key:generate && php /app/artisan migrate && php /app/artisan serve --host 0.0.0.0 --port 8008'
     environment:
       - VIRTUAL_PORT=8008
       - VIRTUAL_HOST=api.learning.jhoacar.me
