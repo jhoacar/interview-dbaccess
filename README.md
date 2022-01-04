@@ -14,7 +14,7 @@
                 Documentacion: <a href="http://api.learning.jhoacar.me/api/documentation">http://api.learning.jhoacar.me/api/documentation</a>
             </li>
             <li>
-                Administracion (MongoDB): <a href="http://mongo.learning.jhoacar.me/api/documentation">http://mongo.learning.jhoacar.me/api/documentation</a>
+                Administracion (MongoDB): <a href="http://mongo.learning.jhoacar.me">http://mongo.learning.jhoacar.me</a>
             </li>
         </ul>
     </li>
