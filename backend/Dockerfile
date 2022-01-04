@@ -1,5 +1,7 @@
 FROM jhoacar/laravel-mongo:base
 
+RUN rm -rf ./*
+
 COPY ./learning-api/composer.json .
 
 COPY ./learning-api/.env.example ./.env
