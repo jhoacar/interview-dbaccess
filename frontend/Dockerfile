@@ -10,6 +10,8 @@ RUN npm install
 
 COPY ./learning .
 
+RUN npm run build
+
 EXPOSE 3000
 
-CMD npm run build && npm start
+CMD npm start

@@ -1,8 +1,8 @@
 version: '3'
 services:
   learning:
-    image: jhoacar/learning:v1
+    image: jhoacar/learning
     restart: always
     ports:
-      - 3000:3000
+      - 80:3000
     command: npm run dev
