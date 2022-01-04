@@ -5,7 +5,7 @@
 </h2>
 <ul>
     <li>
-        Frontend: <a href="https://www.learning.jhoacar.me">https://www.learning.jhoacar.me</a>
+        Frontend: <a href="http://www.learning.jhoacar.me">http://www.learning.jhoacar.me</a>
     </li>
     <li>
         Backend: <a href="http://api.learning.jhoacar.me">http://api.learning.jhoacar.me</a>
@@ -14,7 +14,7 @@
                 Documentacion: <a href="http://api.learning.jhoacar.me/api/documentation">http://api.learning.jhoacar.me/api/documentation</a>
             </li>
             <li>
-                Administracion (MongoDB): <a href="https://mongo.learning.jhoacar.me/api/documentation">https://mongo.learning.jhoacar.me/api/documentation</a>
+                Administracion (MongoDB): <a href="http://mongo.learning.jhoacar.me/api/documentation">http://mongo.learning.jhoacar.me/api/documentation</a>
             </li>
         </ul>
     </li>
