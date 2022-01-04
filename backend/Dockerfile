@@ -1,4 +1,4 @@
-FROM jhoacar/laravel-mongo:base
+FROM jhoacar/laravel-mongo:base-alpine
 
 RUN rm -rf ./*
 
