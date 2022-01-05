@@ -1,41 +1,20 @@
 import { useEffect, useState } from "react";
 
-import { CourseCard } from "../../components/Cards";
+import { courseEndPoint , schemeCourse } from "../../utils/constants";
+import { getCourses } from "../../utils/connections";
 
-import Button from "react-bootstrap/Button";
-import Modal from "../../components/Modal";
-import { itemsCourse } from "../../utils/constants";
-import Main from "../main";
-
-import { courseEndpoint } from "../../utils/constants";
+import ButtonGroup from "../../components/ButtonGroup";
 
 const CoursePage = ({ ...props }) => {
+
   const [courses, setCourses] = useState([]);
-  const [modalShow, setModalShow] = useState(false);
 
-  const groupButtons = () => (
-    <>
-      <Button variant="outline-primary" onClick={() => getCourses(setCourses)}>
-        Refrescar
-      </Button>
-      <Button variant="outline-primary" onClick={() => setModalShow(true)}>
-        Cargar Curso
-      </Button>
-      <Modal
-        title="Crear Curso"
-        endPoint={endPoint}
-        show={modalShow}
-        items={itemsCourse}
-        onHide={() => setModalShow(false)}
-      ></Modal>
-    </>
-  );
+  const refreshItems = () => getCourses(setCourses);
 
-  useEffect(() => getCourses(setCourses), []);
+  useEffect(refreshItems, []);
 
   return (
-
-    <Main groupButtons={groupButtons}></Main>
+    <ButtonGroup titleModal={"Crear Curso"} itemsModal={schemeCourse} endPointPost={courseEndPoint} refreshItems={refreshItems}></ButtonGroup>
   );
 };
 
