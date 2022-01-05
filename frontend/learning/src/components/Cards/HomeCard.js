@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HomeCard = ({ ...props }) => {
   return (
-    <Card style={{ alignSelf: "center", width: "100%" }} {...props}>
+    <Card className="d-grid" {...props}>
       <Card.Img variant="top" src="/course.png" className="p-5" />
       <Card.Body className="h-100 w-100 p-5">
         <Card.Title className="text-center">Cursos Disponibles</Card.Title>

@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
-//import "html-duration-picker";
+
 import { useEffect } from "react";
 
 import Head from "next/head";
@@ -16,7 +16,6 @@ function LearningApp({ Component, pageProps, reduxStore }) {
     <>
       <Head>
         <title>Learning - Interview DBAccess</title>
-        <script src="https://cdn.jsdelivr.net/npm/html-duration-picker@latest/dist/html-duration-picker.min.js" defer></script>
         <link rel="shortcut icon" href="/icon.png" />
       </Head>
       <Navbar height="150px" />

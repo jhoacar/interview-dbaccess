@@ -4,7 +4,6 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 
 import Link from "next/link";
-//import img from "next/img";
 
 const CustomNav = ({height="150px"}) => {
   return (

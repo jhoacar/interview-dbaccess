@@ -7,7 +7,7 @@ const GroupButtons = ({ titleModal="titulo",itemsModal=[],endPointPost, refreshI
   const [modalShow,setModalShow] = useState(false);
   
   return (
-    <div className="w-100 d-flex align-items-center justify-content-evenly" {...props}>
+    <div className="w-100 gap-3 d-flex align-items-center justify-content-evenly" {...props}>
       <Button size="lg" variant="outline-primary" onClick={() => refreshItems()}> Refrescar </Button>
       <Button size="lg" variant="outline-primary" onClick={() => setModalShow(true)}>Cargar Curso</Button>
       <Modal title={titleModal} endPoint={endPointPost} show={modalShow} items={itemsModal} onHide={() => setModalShow(false)} />
