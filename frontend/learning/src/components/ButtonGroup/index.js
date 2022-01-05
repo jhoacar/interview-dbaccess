@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "../Modal";
 
-const GroupButtons = ({ titleModal,itemsModal,endPointPost, refreshItems, ...props }) => {
+const GroupButtons = ({ titleModal="titulo",itemsModal=[],endPointPost=process.env.NEXT_PUBLIC_API_URL, refreshItems, ...props }) => {
   
   const [modalShow,setModalShow] = useState(false);
   

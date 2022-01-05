@@ -5,7 +5,7 @@ import { getCourses } from "../../utils/connections";
 
 import ButtonGroup from "../../components/ButtonGroup";
 
-const CoursePage = ({ ...props }) => {
+const CourseContainer = ({ ...props }) => {
 
   const [courses, setCourses] = useState([]);
 
@@ -18,4 +18,4 @@ const CoursePage = ({ ...props }) => {
   );
 };
 
-export default CoursePage;
+export default CourseContainer;
