@@ -1,25 +1,8 @@
-import { useEffect, useState } from "react";
+import CourseContainer from "../../containers/courses";
 
-
-const updateCourses = async setCourses =>{
-    const response = await fetch(process.env.API_URL);
-    console.log(response);
-}
-
-
-const CoursePage  = ()=>{
-
-    const [courses, setCourses] = useState([]);
-
-    useEffect(()=>updateCourses(setCourses),[courses]);
-
-    return (
-        <>
-            <div>
-                Cursito
-            </div>
-        </>
-    );
+const CoursePage = ({...props}) => {
+  return (
+  <CourseContainer {...props}></CourseContainer>);
 };
 
 export default CoursePage;

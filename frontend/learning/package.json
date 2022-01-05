@@ -2,6 +2,7 @@
   "name": "learning",
   "private": true,
   "scripts": {
+    "version": "next --version",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
