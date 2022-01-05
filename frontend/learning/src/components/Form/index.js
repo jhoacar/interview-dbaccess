@@ -1,16 +1,19 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useState } from "react";
 
-const CustomForm = ({items, ...props}) => {
+const CustomForm = ({items, endPoint=process.env.NEXT_PUBLIC_API_URL , ...props}) => {
+  
+  const [textButton, setTextButton ] = useState("Enviar");
+  
   return (
-    <Form {...props} action={process.env.NEXT_PUBLIC_API_URL + endPoint} method="POST" >
+    <Form {...props} action={endPoint} method="POST" >
       {items?.map((item) => (
         <Form.Group className="mb-3">
           <Form.Label>{item?.label}</Form.Label>
           <Form.Control
-            type={item?.type}
-            placeholder={item?.placeholder}
-            required={item?.required ? 1 : 0}
+            {...item}
+            required
           />
           <Form.Text className="text-muted">{item?.text}</Form.Text>
         </Form.Group>

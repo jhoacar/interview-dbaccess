@@ -1796,6 +1796,11 @@
   dependencies:
     "react-is" "^16.7.0"
 
+"html-duration-picker@^2.3.4":
+  "integrity" "sha512-dszjMu2CPGzBIcyPtcelc8ZgWetUoS9fWXf+EaxEw6w6ML3LS9InikAzPIOLmAlzCYoBjlWth267PTXWAquP+Q=="
+  "resolved" "https://registry.npmjs.org/html-duration-picker/-/html-duration-picker-2.3.4.tgz"
+  "version" "2.3.4"
+
 "http-errors@1.7.3":
   "integrity" "sha512-ZTTX0MWrsQ2ZAhA1cejAwDLycFsd7I7nVtnkT3Ol0aqodaKW+0CTZDQ1uBv5whptCnc8e8HeRRJxRs0kmm/Qfw=="
   "resolved" "https://registry.npmjs.org/http-errors/-/http-errors-1.7.3.tgz"
