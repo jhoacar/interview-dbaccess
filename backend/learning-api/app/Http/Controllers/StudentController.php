@@ -95,9 +95,9 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show($id)
     {
-        //
+        return Student::findOrFail($id);
     }
 
     /**

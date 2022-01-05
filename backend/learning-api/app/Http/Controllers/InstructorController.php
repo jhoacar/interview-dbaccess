@@ -92,9 +92,9 @@ class InstructorController extends Controller
      * @param  \App\Instructor  $instructor
      * @return \Illuminate\Http\Response
      */
-    public function show(Instructor $instructor)
+    public function show($id)
     {
-        //
+        return Instructor::findOrFail($id);
     }
 
     /**

@@ -6,7 +6,7 @@ services:
     restart: always
     ports:
       - 80:8008
-    command: bash -c 'php artisan serve --host 0.0.0.0 --port 8008'
+    command: sh -c 'php artisan serve --host 0.0.0.0 --port 8008'
     environment:
       - DB_CONNECTION=mongodb
       - DB_HOST=mongo

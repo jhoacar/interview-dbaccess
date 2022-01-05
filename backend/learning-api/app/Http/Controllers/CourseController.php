@@ -13,6 +13,9 @@ use Throwable;
  * @OA\Info(title="API Course", version="1.0")
  *
  * @OA\Server(url="https://api.learning.jhoacar.me")
+ * @OA\Server(url="http://api.learning.jhoacar.me")
+ * @OA\Server(url="http://localhost")
+ * @OA\Server(url="http://localhost:8080")
  *
  * @OA\Tag(
  *     name="CourseController",
@@ -136,9 +139,9 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        return Course::findOrFail($id);
     }
 
     /**
