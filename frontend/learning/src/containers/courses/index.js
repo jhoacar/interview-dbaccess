@@ -17,7 +17,7 @@ const CourseContainer = ({ ...props }) => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center gap-3">
     <ButtonGroup titleModal={"Crear Curso"} itemsModal={schemeCourse} endPointPost={courseEndPoint} refreshItems={refreshItems}></ButtonGroup>
-      {courses?.map(course=><CourseCard course={course}/>)}
+      {courses?.map((course,index)=><CourseCard key={index} course={course}/>)}
     </div>
   );
 };

@@ -17,7 +17,7 @@ const StudentContainer = ({ ...props }) => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center gap-3">
     <ButtonGroup titleModal={"Crear Estudiante"} itemsModal={schemeStudent} endPointPost={studentEndPoint} refreshItems={refreshItems}></ButtonGroup>
-      {students?.map(student=><StudentCard student={student}/>)}
+      {students?.map((student,index)=><StudentCard key={index} student={student}/>)}
     </div>
   );
 };
